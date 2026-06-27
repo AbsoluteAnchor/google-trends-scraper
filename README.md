@@ -1,470 +1,163 @@
-[Google Trends Scraper](https://apify.com/viralanalyzer/google-trends-scraper?fpr=data)
+[Google Trends Scraper](https://apify.com/inexhaustible_glass/google-trends-scraper?fpr=data)
 
-# 📈 Google Trends Scraper — Interest Over Time, Related Queries & Daily Trends
+# Google Trends Scraper - Keyword Research & SEO Analysis Tool
 
-> 🔗 [View on Apify Store](https://apify.com/viralanalyzer/google-trends-scraper) | 🇺🇸 English | 🇧🇷 Português
+**The most complete Google Trends scraper on Apify.** Analyze keyword trends, compare search interest, discover rising queries, track trending topics, and get regional data. Free Google Trends API alternative for SEO, keyword research, and market analysis.
 
-Scrape **Google Trends data** for any keyword: interest over time, related queries, related topics, and daily trending searches. Compare up to 5 keywords at once with geo-targeting, time ranges, and category filters. Pure HTTP — fast and lightweight, no browser needed.
+## 🎯 What this Google Trends scraper does
 
-## ✨ Features
+This **Google Trends API alternative** / **keyword research tool** / **SEO analysis scraper** gives you:
 
-- 📊 **Interest over time** — Timeline with search interest values (0-100) for each keyword
-- 🔗 **Related queries** — Top and rising related search queries per keyword
-- 🏷️ **Related topics** — Top and rising related topics with type classification
-- 📅 **Daily trending searches** — Today's trending searches with traffic estimates and news articles
-- 🌍 **Geo-targeting** — Filter by country/region (ISO 3166-1 alpha-2 codes)
-- ⏰ **Flexible time ranges** — Past hour to all time (2004-present)
-- 🗂️ **Category filtering** — Filter by Google Trends category (Finance, Food & Drink, etc.)
-- 🌐 **9 languages** — English, Portuguese, Spanish, French, German, Italian, Japanese, Korean, Chinese
-- ⚡ **Pure HTTP** — Uses Google Trends internal API directly, no browser needed
+- 📈 **Interest over time** — historical search interest graph data
+- 🌍 **Interest by region** — country/state/city breakdown
+- 🔍 **Related queries** — top and rising related searches
+- 💡 **Related topics** — top and rising topic suggestions
+- 🔥 **Trending searches** — today's trending searches by country
+- 📊 **Bulk keyword comparison** — compare 100+ keywords
+- 🗓️ **Custom timeframes** — past hour to all-time (2004-present)
+- 🌐 **100+ countries** — regional trend data
+- 🏷️ **Category filtering** — narrow by topic (News, Sports, Tech, etc.)
 
-## 📥 Input
+## 💼 Perfect for
 
-| Parameter | Type | Required | Default | Description |
-| --- | --- | --- | --- | --- |
-| `keywords` | string[] | ✅ | — | Search terms to analyze (1-5 keywords) |
-| `geo` | string | ❌ | `""` (worldwide) | Country code (e.g., "US", "BR", "GB") |
-| `timeRange` | string | ❌ | `"today 12-m"` | Time period (see options below) |
-| `category` | integer | ❌ | `0` | Google Trends category ID (0 = All) |
-| `dataTypes` | string[] | ❌ | `["interestOverTime", "relatedQueries", "relatedTopics"]` | Data types to collect |
-| `includeDailyTrends` | boolean | ❌ | `false` | Also fetch today's trending searches |
-| `language` | string | ❌ | `"en"` | Results language (en, pt, es, fr, de, it, ja, ko, zh-CN) |
-| `proxyConfiguration` | object | ❌ | Apify Proxy | Proxy settings |
+- **SEO specialists** — find trending keywords to target, track seasonal patterns
+- **Content marketers** — identify hot topics for blog posts, videos, newsletters
+- **Keyword research** — validate keyword demand before creating content
+- **Market research** — analyze consumer interest trends over time
+- **Product managers** — track product/category demand and seasonality
+- **Trend analysts** — spot emerging trends before they peak
+- **Brand monitoring** — track brand mention trends vs competitors
+- **E-commerce** — seasonal product planning, trending product discovery
+- **News & journalism** — find trending topics and stories
+- **Academic research** — study consumer behavior and search patterns
+- **Stock/crypto trading** — sentiment indicators from search interest
+- **YouTube creators** — find trending video topics
+- **Agency reporting** — client dashboards with trend data
 
-**Time Range Options:**
+## 🔑 Features
 
-| Value | Description |
-| --- | --- |
-| `now 1-H` | Past hour |
-| `now 4-H` | Past 4 hours |
-| `now 1-d` | Past day |
-| `now 7-d` | Past 7 days |
-| `today 1-m` | Past 30 days |
-| `today 3-m` | Past 90 days |
-| `today 12-m` | Past 12 months |
-| `today 5-y` | Past 5 years |
-| `all` | 2004 to present |
+- ✅ **Bulk keyword analysis** — up to 100+ keywords per run (Google compares 5 at a time internally)
+- ✅ **Interest over time** — daily, weekly, or monthly data points
+- ✅ **Regional breakdown** — interest by country, state, metro area
+- ✅ **Related queries** — top (most searched) and rising (fastest growing)
+- ✅ **Related topics** — semantic topic suggestions
+- ✅ **Trending now** — today's trending searches by country
+- ✅ **Custom timeframes** — 1 hour, 4 hours, 1 day, 7 days, 30 days, 90 days, 12 months, 5 years, all-time, or custom date range
+- ✅ **Country targeting** — 100+ countries supported (US, IN, GB, DE, FR, JP, BR, AU, CA, and more)
+- ✅ **Category filtering** — 30+ categories (News, Sports, Tech, Food, Finance, etc.)
+- ✅ **JSON output** — clean structured data
+- ✅ **Free plan compatible** — runs on 512 MB memory
 
-### Input Example
+## 📋 Input
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `keywords` | Array of strings | Keywords to analyze (up to 100+) |
+| `timeframe` | String | Time range: `today 1-m`, `today 3-m`, `today 12-m`, `today 5-y`, `all`, or custom `2024-01-01 2024-12-31` |
+| `geo` | String | Country code: `US`, `IN`, `GB`, `DE`, `FR`, `JP`, etc. Empty = worldwide |
+| `category` | Integer | Category ID. 0 = all. 13 = News, 71 = Food, 174 = Sports |
+| `includeTrending` | Boolean | Also fetch today's trending searches |
+| `trendingCountry` | String | Country for trending: `united_states`, `india`, `united_kingdom`, etc. |
+
+### Example input
 
 ```
 {
-  "keywords": [
-    "artificial intelligence",
-    "machine learning",
-    "deep learning"
-  ],
+  "keywords": ["AI", "ChatGPT", "Claude", "Gemini"],
+  "timeframe": "today 3-m",
   "geo": "US",
-  "timeRange": "today 12-m",
   "category": 0,
-  "dataTypes": ["interestOverTime", "relatedQueries", "relatedTopics"],
-  "includeDailyTrends": true,
-  "language": "en"
+  "includeTrending": true,
+  "trendingCountry": "united_states"
 }
 ```
 
-## 📤 Output
-
-The actor produces 4 types of output items, all with a unified schema:
-
-### Interest Over Time
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `type` | string | Always `"interestOverTime"` |
-| `keyword` | string | The search term |
-| `geo` | string | Country/region or `"worldwide"` |
-| `timeRange` | string | Time period used |
-| `timelinePoints` | number | Number of data points |
-| `averageInterest` | number | Average interest value (0-100) |
-| `maxInterest` | number | Peak interest value |
-| `minInterest` | number | Minimum interest value |
-| `timeline` | object[] | Array of `{date, timestamp, value, formattedValue}` |
-
-### Related Queries
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `type` | string | Always `"relatedQueries"` |
-| `keyword` | string | The search term |
-| `rankingType` | string | `"TOP"` or `"RISING"` |
-| `queriesCount` | number | Number of related queries |
-| `queries` | object[] | Array of `{query, value, formattedValue, link}` |
-
-### Related Topics
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `type` | string | Always `"relatedTopics"` |
-| `keyword` | string | The search term |
-| `rankingType` | string | `"TOP"` or `"RISING"` |
-| `topicsCount` | number | Number of related topics |
-| `topics` | object[] | Array of `{title, topicType, value, formattedValue, link}` |
-
-### Daily Trends
-
-| Field | Type | Description |
-| --- | --- | --- |
-| `type` | string | Always `"dailyTrends"` |
-| `date` | string | Date of trending searches |
-| `searchesCount` | number | Number of trending searches |
-| `searches` | object[] | Array of `{title, traffic, trafficNumber, articles[]}` |
-
-### Output Example
+## 📤 Output (per keyword)
 
 ```
 {
-  "type": "interestOverTime",
-  "keyword": "artificial intelligence",
+  "keyword": "ChatGPT",
+  "success": true,
+  "timeframe": "today 3-m",
   "geo": "US",
-  "timeRange": "today 12-m",
-  "language": "en",
-  "category": 0,
-  "timelinePoints": 52,
-  "averageInterest": 71,
-  "maxInterest": 100,
-  "minInterest": 48,
-  "timeline": [
-    {
-      "date": "Mar 10 – 16, 2025",
-      "timestamp": 1741564800,
-      "value": 62,
-      "formattedValue": "62"
-    },
-    {
-      "date": "Mar 17 – 23, 2025",
-      "timestamp": 1742169600,
-      "value": 68,
-      "formattedValue": "68"
-    }
+  "interest_over_time": {
+    "dates": ["2026-01-05", "2026-01-12", "..."],
+    "values": [90, 85, 78, "..."]
+  },
+  "interest_by_region": [
+    { "region": "California", "value": 100 },
+    { "region": "New York", "value": 92 }
   ],
-  "scrapedAt": "2026-03-06T14:30:12.789Z"
+  "related_queries": {
+    "top": [{ "query": "chatgpt login", "value": 100 }],
+    "rising": [{ "query": "chatgpt 5", "value": "Breakout" }]
+  },
+  "related_topics": {
+    "top": [...],
+    "rising": [...]
+  },
+  "summary": {
+    "avg_interest": 72,
+    "peak_interest": 100,
+    "trend_direction": "rising"
+  }
 }
 ```
 
-```
-{
-  "type": "relatedQueries",
-  "keyword": "artificial intelligence",
-  "geo": "US",
-  "timeRange": "today 12-m",
-  "rankingType": "TOP",
-  "queriesCount": 25,
-  "queries": [
-    {
-      "query": "chatgpt",
-      "value": 100,
-      "formattedValue": "100",
-      "link": "/trends/explore?q=chatgpt&geo=US"
-    },
-    {
-      "query": "ai artificial intelligence",
-      "value": 82,
-      "formattedValue": "82",
-      "link": "/trends/explore?q=ai+artificial+intelligence&geo=US"
-    }
-  ],
-  "scrapedAt": "2026-03-06T14:30:15.123Z"
-}
-```
+## 💡 Use cases
 
-```
-{
-  "type": "dailyTrends",
-  "keyword": "",
-  "geo": "US",
-  "date": "2026-03-06",
-  "searchesCount": 20,
-  "searches": [
-    {
-      "title": "March Madness",
-      "traffic": "2,000,000+",
-      "trafficNumber": 2000000,
-      "articlesCount": 8,
-      "articles": [
-        {
-          "title": "NCAA Tournament bracket revealed: Full field of 68 teams",
-          "url": "https://www.espn.com/mens-college-basketball/story/_/id/43851273",
-          "source": "ESPN",
-          "snippet": "The 2026 NCAA Tournament bracket has been revealed..."
-        }
-      ]
-    }
-  ],
-  "scrapedAt": "2026-03-06T14:30:18.456Z"
-}
-```
+### 1. SEO keyword research
 
-## 📋 Use Cases
+Find keywords with rising search interest before your competitors target them. Spot seasonal patterns to plan content calendar.
 
-- 📝 **Content Strategy** — Identify trending topics to create timely content
-- 🔎 **SEO Research** — Discover rising search queries and related keywords
-- 📊 **Market Research** — Compare product/brand interest over time and by region
-- 🏢 **Competitive Analysis** — Track competitor brand search interest vs. yours
-- 📈 **Trend Forecasting** — Analyze seasonal patterns and emerging trends
-- 📰 **News Monitoring** — Track daily trending searches with related articles
+### 2. Content topic generation
+
+Get `related_queries.rising` for your niche — these are the exact questions people are newly searching for.
+
+### 3. Product trend analysis
+
+Track product category demand over time. "Air fryer" trending up? "Kombucha" declining? Plan inventory and marketing accordingly.
+
+### 4. Competitive brand tracking
+
+Compare your brand name vs competitors in Google Trends to measure share of search over time.
+
+### 5. Seasonal planning
+
+See exactly when "Halloween costumes" or "Christmas gifts" start trending each year to time your campaigns.
+
+### 6. Geographic targeting
+
+Find which states/countries search for your keywords most to prioritize ad spend and localization.
+
+### 7. Stock and crypto sentiment
+
+Search interest often leads price movement — track "Bitcoin", "Tesla", etc. as a sentiment indicator.
 
 ## ❓ FAQ
 
-**Q: How many keywords can I compare at once?**
+**Q: Is this a Google Trends API?**
+A: Google doesn't offer an official public API. This scraper provides equivalent data by scraping Google Trends directly.
 
-A: Up to 5 keywords simultaneously, which is the limit imposed by Google Trends itself. Each keyword generates separate data items for interest over time, related queries (TOP + RISING), and related topics (TOP + RISING).
+**Q: How is this different from pytrends?**
+A: pytrends is a Python library that often breaks due to IP blocks and rate limits. This hosted Apify scraper handles infrastructure for you — no setup.
 
-**Q: What do the interest values (0-100) mean?**
+**Q: Can I compare 10+ keywords at once?**
+A: Yes. Google internally compares 5 at a time, but this scraper automatically handles batching so you can input 100+ keywords.
 
-A: Google Trends normalizes search interest on a 0-100 scale relative to the peak popularity within the selected time range and region. A value of 100 represents peak popularity, 50 means half as popular as the peak, and 0 means insufficient data. These are relative values, not absolute search volumes.
+**Q: What timeframes are supported?**
+A: Past hour (`now 1-H`), past 4 hours (`now 4-H`), past day (`now 1-d`), 7 days, 30 days (`today 1-m`), 90 days (`today 3-m`), 12 months (`today 12-m`), 5 years (`today 5-y`), all-time (`all`), or custom range.
 
-**Q: Do I need a proxy?**
+**Q: Does it include trending searches?**
+A: Yes, set `includeTrending: true` and specify `trendingCountry`.
 
-A: Google Trends may rate-limit requests, especially for multiple consecutive runs. For occasional use, no proxy is needed. For frequent or high-volume scraping, configure Apify Proxy via the `proxyConfiguration` parameter to avoid 429 errors.
+**Q: Can I use this on Apify free plan?**
+A: Yes — optimized to run on 512 MB memory, so your $5/month free credits cover many runs.
 
-**Q: What is the difference between TOP and RISING related queries?**
+## 🔖 Keywords
 
-A: TOP queries are the most popular related searches overall for the keyword. RISING queries are those with the biggest increase in search frequency recently — these are especially useful for spotting emerging trends.
+google trends scraper, google trends api, keyword research tool, seo keyword finder, trending keywords, search trends api, google trends data, keyword trend analysis, seo tools, trending topics, rising queries, google trends bulk, keyword comparison tool, search volume api, keyword research api, google trends python alternative, pytrends alternative, trend analysis tool, seo research, keyword discovery, content ideas tool, trending searches, google search trends, search interest tracker, keyword popularity, seasonal trends, market trends analysis, trending topics api, google trends export, google trends csv, related queries finder, rising topics finder, seo analytics tool, content marketing tool, trend forecasting, keyword validation
 
-**Q: How does daily trends differ from keyword analysis?**
+## 📞 Support
 
-A: Keyword analysis (`interestOverTime`, `relatedQueries`, `relatedTopics`) shows data for your specific keywords. Daily trends (`includeDailyTrends`) returns what is trending today in the selected country regardless of your keywords — it includes traffic estimates and related news articles.
-
-## 💰 Pricing
-
-This actor uses **Pay Per Event (PPE)** pricing:
-
-| Metric | Cost |
-| --- | --- |
-| Per data item scraped | $0.10 |
-
-Each keyword generates multiple items (interest over time + related queries TOP + related queries RISING + related topics TOP + related topics RISING). Daily trends count as 1 item per day.
-
-## 🔗 Related Actors
-
-- [eBay Product Scraper](https://apify.com/viralanalyzer/ebay-product-scraper) — Product data for trend validation
-- [CoinGecko Crypto Intelligence](https://apify.com/viralanalyzer/coingecko-crypto-intelligence) — Crypto market trends
-- [Steam Game Intelligence](https://apify.com/viralanalyzer/steam-game-intelligence) — Gaming market trends
-- [TikTok Viral Scanner](https://apify.com/viralanalyzer/tiktok-viral-scanner) — Viral content trends
-
-## 📝 Changelog
-
-### v1.0 (Current)
-
-- Interest over time with full timeline data
-- Related queries (TOP + RISING) per keyword
-- Related topics (TOP + RISING) per keyword
-- Daily trending searches with news articles (API + RSS fallback)
-- Compare up to 5 keywords simultaneously
-- Geo-targeting by country/region
-- 9 time range options (past hour to all time)
-- Category filtering
-- 9 language options
-- Anti-placeholder guardrails + contract validation
-- Google XSSI prefix handling
-- PPE billing integration
-
----
-
-# 📈 Google Trends Scraper — Interesse ao Longo do Tempo, Consultas Relacionadas e Tendências
-
-> 🔗 [View on Apify Store](https://apify.com/viralanalyzer/google-trends-scraper) | 🇺🇸 English | 🇧🇷 Português
-
-Extraia **dados do Google Trends** para qualquer palavra-chave: interesse ao longo do tempo, consultas relacionadas, tópicos relacionados e buscas em alta do dia. Compare até 5 palavras-chave simultaneamente com filtros por país, período e categoria. HTTP puro — rápido e leve, sem browser.
-
-## ✨ Funcionalidades
-
-- 📊 **Interesse ao longo do tempo** — Timeline com valores de interesse de busca (0-100) por keyword
-- 🔗 **Consultas relacionadas** — Principais e em crescimento por palavra-chave
-- 🏷️ **Tópicos relacionados** — Principais e em crescimento com classificação de tipo
-- 📅 **Buscas em alta do dia** — Tendências do dia com estimativas de tráfego e artigos de notícias
-- 🌍 **Segmentação geográfica** — Filtre por país/região (códigos ISO 3166-1 alpha-2)
-- ⏰ **Períodos flexíveis** — Última hora até todo o período (2004-presente)
-- 🗂️ **Filtro por categoria** — Filtre por categoria do Google Trends (Finanças, Gastronomia, etc.)
-- 🌐 **9 idiomas** — Inglês, Português, Espanhol, Francês, Alemão, Italiano, Japonês, Coreano, Chinês
-- ⚡ **HTTP puro** — Usa API interna do Google Trends diretamente, sem browser
-
-## 📥 Entrada
-
-| Parâmetro | Tipo | Obrigatório | Padrão | Descrição |
-| --- | --- | --- | --- | --- |
-| `keywords` | string[] | ✅ | — | Termos de busca para analisar (1-5 keywords) |
-| `geo` | string | ❌ | `""` (mundial) | Código do país (ex: "US", "BR", "GB") |
-| `timeRange` | string | ❌ | `"today 12-m"` | Período de tempo (veja opções abaixo) |
-| `category` | inteiro | ❌ | `0` | ID de categoria do Google Trends (0 = Todas) |
-| `dataTypes` | string[] | ❌ | `["interestOverTime", "relatedQueries", "relatedTopics"]` | Tipos de dados para coletar |
-| `includeDailyTrends` | boolean | ❌ | `false` | Incluir buscas em alta do dia |
-| `language` | string | ❌ | `"en"` | Idioma dos resultados (en, pt, es, fr, de, it, ja, ko, zh-CN) |
-| `proxyConfiguration` | objeto | ❌ | Apify Proxy | Configuração de proxy |
-
-**Opções de Período:**
-
-| Valor | Descrição |
-| --- | --- |
-| `now 1-H` | Última hora |
-| `now 4-H` | Últimas 4 horas |
-| `now 1-d` | Último dia |
-| `now 7-d` | Últimos 7 dias |
-| `today 1-m` | Últimos 30 dias |
-| `today 3-m` | Últimos 90 dias |
-| `today 12-m` | Últimos 12 meses |
-| `today 5-y` | Últimos 5 anos |
-| `all` | 2004 até o presente |
-
-### Exemplo de Entrada
-
-```
-{
-  "keywords": [
-    "inteligência artificial",
-    "machine learning",
-    "deep learning"
-  ],
-  "geo": "BR",
-  "timeRange": "today 12-m",
-  "category": 0,
-  "dataTypes": ["interestOverTime", "relatedQueries", "relatedTopics"],
-  "includeDailyTrends": true,
-  "language": "pt"
-}
-```
-
-## 📤 Saída
-
-O actor produz 4 tipos de itens de saída, todos com schema unificado:
-
-### Interesse ao Longo do Tempo
-
-| Campo | Tipo | Descrição |
-| --- | --- | --- |
-| `type` | string | Sempre `"interestOverTime"` |
-| `keyword` | string | O termo de busca |
-| `geo` | string | País/região ou `"worldwide"` |
-| `timeRange` | string | Período utilizado |
-| `timelinePoints` | número | Número de pontos de dados |
-| `averageInterest` | número | Interesse médio (0-100) |
-| `maxInterest` | número | Pico de interesse |
-| `minInterest` | número | Mínimo de interesse |
-| `timeline` | objeto[] | Array de `{date, timestamp, value, formattedValue}` |
-
-### Consultas Relacionadas
-
-| Campo | Tipo | Descrição |
-| --- | --- | --- |
-| `type` | string | Sempre `"relatedQueries"` |
-| `keyword` | string | O termo de busca |
-| `rankingType` | string | `"TOP"` ou `"RISING"` |
-| `queriesCount` | número | Número de consultas relacionadas |
-| `queries` | objeto[] | Array de `{query, value, formattedValue, link}` |
-
-### Tópicos Relacionados
-
-| Campo | Tipo | Descrição |
-| --- | --- | --- |
-| `type` | string | Sempre `"relatedTopics"` |
-| `keyword` | string | O termo de busca |
-| `rankingType` | string | `"TOP"` ou `"RISING"` |
-| `topicsCount` | número | Número de tópicos relacionados |
-| `topics` | objeto[] | Array de `{title, topicType, value, formattedValue, link}` |
-
-### Tendências Diárias
-
-| Campo | Tipo | Descrição |
-| --- | --- | --- |
-| `type` | string | Sempre `"dailyTrends"` |
-| `date` | string | Data das buscas em alta |
-| `searchesCount` | número | Número de buscas em alta |
-| `searches` | objeto[] | Array de `{title, traffic, trafficNumber, articles[]}` |
-
-### Exemplo de Saída
-
-```
-{
-  "type": "interestOverTime",
-  "keyword": "inteligência artificial",
-  "geo": "BR",
-  "timeRange": "today 12-m",
-  "language": "pt",
-  "category": 0,
-  "timelinePoints": 52,
-  "averageInterest": 65,
-  "maxInterest": 100,
-  "minInterest": 42,
-  "timeline": [
-    {
-      "date": "10 – 16 de mar. de 2025",
-      "timestamp": 1741564800,
-      "value": 58,
-      "formattedValue": "58"
-    },
-    {
-      "date": "17 – 23 de mar. de 2025",
-      "timestamp": 1742169600,
-      "value": 63,
-      "formattedValue": "63"
-    }
-  ],
-  "scrapedAt": "2026-03-06T14:30:12.789Z"
-}
-```
-
-## 📋 Casos de Uso
-
-- 📝 **Estratégia de Conteúdo** — Identifique tópicos em alta para criar conteúdo oportuno
-- 🔎 **Pesquisa de SEO** — Descubra consultas de busca em crescimento e palavras-chave relacionadas
-- 📊 **Pesquisa de Mercado** — Compare interesse em produtos/marcas ao longo do tempo e por região
-- 🏢 **Análise Competitiva** — Acompanhe o interesse de busca da marca concorrente vs. a sua
-- 📈 **Previsão de Tendências** — Analise padrões sazonais e tendências emergentes
-- 📰 **Monitoramento de Notícias** — Acompanhe buscas em alta do dia com artigos relacionados
-
-## ❓ Perguntas Frequentes
-
-**P: Quantas palavras-chave posso comparar ao mesmo tempo?**
-
-R: Até 5 palavras-chave simultaneamente, que é o limite imposto pelo próprio Google Trends. Cada keyword gera itens separados para interesse ao longo do tempo, consultas relacionadas (TOP + RISING) e tópicos relacionados (TOP + RISING).
-
-**P: O que significam os valores de interesse (0-100)?**
-
-R: O Google Trends normaliza o interesse de busca em uma escala de 0-100 relativa ao pico de popularidade dentro do período e região selecionados. Um valor de 100 representa o pico de popularidade, 50 significa metade da popularidade do pico, e 0 significa dados insuficientes. São valores relativos, não volumes absolutos de busca.
-
-**P: Preciso de proxy?**
-
-R: O Google Trends pode aplicar rate limit em requisições, especialmente para múltiplas execuções consecutivas. Para uso ocasional, não é necessário proxy. Para scraping frequente ou em grande volume, configure o Apify Proxy através do parâmetro `proxyConfiguration` para evitar erros 429.
-
-**P: Qual a diferença entre consultas TOP e RISING?**
-
-R: Consultas TOP são as buscas relacionadas mais populares no geral para a keyword. Consultas RISING são aquelas com o maior aumento na frequência de busca recentemente — são especialmente úteis para identificar tendências emergentes.
-
-**P: Como as tendências diárias diferem da análise de keywords?**
-
-R: A análise de keywords (`interestOverTime`, `relatedQueries`, `relatedTopics`) mostra dados para suas palavras-chave específicas. Tendências diárias (`includeDailyTrends`) retorna o que está em alta hoje no país selecionado, independente das suas keywords — inclui estimativas de tráfego e artigos de notícias relacionados.
-
-## 💰 Preços
-
-Este actor usa precificação **Pay Per Event (PPE)**:
-
-| Métrica | Custo |
-| --- | --- |
-| Por item de dados extraído | $0.10 |
-
-Cada keyword gera múltiplos itens (interesse ao longo do tempo + consultas relacionadas TOP + consultas relacionadas RISING + tópicos relacionados TOP + tópicos relacionados RISING). Tendências diárias contam como 1 item por dia.
-
-## 🔗 Actors Relacionados
-
-- [eBay Product Scraper](https://apify.com/viralanalyzer/ebay-product-scraper) — Dados de produtos para validar tendências
-- [CoinGecko Crypto Intelligence](https://apify.com/viralanalyzer/coingecko-crypto-intelligence) — Tendências de mercado cripto
-- [Steam Game Intelligence](https://apify.com/viralanalyzer/steam-game-intelligence) — Tendências de mercado de jogos
-- [TikTok Viral Scanner](https://apify.com/viralanalyzer/tiktok-viral-scanner) — Tendências de conteúdo viral
-
-## 📝 Changelog
-
-### v1.0 (Atual)
-
-- Interesse ao longo do tempo com timeline completa
-- Consultas relacionadas (TOP + RISING) por keyword
-- Tópicos relacionados (TOP + RISING) por keyword
-- Buscas em alta do dia com artigos de notícias (API + fallback RSS)
-- Comparação de até 5 keywords simultaneamente
-- Segmentação geográfica por país/região
-- 9 opções de período (última hora até todos os tempos)
-- Filtro por categoria
-- 9 opções de idioma
-- Guardrails anti-placeholder + validação de contrato
-- Tratamento de prefixo XSSI do Google
-- Integração com cobrança PPE
+Found a bug or have a feature request? Contact the author on Apify.
