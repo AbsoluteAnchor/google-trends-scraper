@@ -1,210 +1,174 @@
-[Google Trends Scraper](https://apify.com/joyouscam35875/google-trends-scraper?fpr=data)
+[Google Trends Scraper](https://apify.com/scraperpro/google-trends-scraper?fpr=data)
 
 # 📈 Google Trends Scraper
 
-Scrape **Google Trends** data at scale — interest over time, related queries, rising topics, and regional interest. Built for SEO professionals, content strategists, and market researchers.
+An Apify Actor that retrieves data from Google Trends: realtime trending searches, interest over time, interest by region, and related queries/topics.
 
-## 💰 3x Cheaper Than Competitors
+### 🚀 Quickstart (no input required)
 
-| Actor | Price per keyword |
-| --- | --- |
-| Other Google Trends scrapers | $0.005–$0.010 |
-| **This actor** | **$0.002** |
+Want to get started in a flash? ⚡️ The actor has smart defaults, so you can run it immediately and get the latest realtime trending searches for the US.
 
-Pay-per-event pricing — you only pay for what you scrape.
-
-## 🎯 What You Get
-
-For each keyword, the actor returns:
-
-- **Interest Over Time** — Daily/weekly/monthly search interest (0–100 scale)
-- **Related Queries** — Top and rising related search terms
-- **Related Topics** — Top and rising related topics with categories
-- **Interest by Region** — Geographic breakdown by country or sub-region
-
-## 🚀 Use Cases
-
-### SEO & Content Strategy
-
-- Find trending keywords before your competitors
-- Identify seasonal search patterns for content planning
-- Discover related queries to expand your keyword clusters
-
-### Market Research
-
-- Compare brand awareness across regions
-- Track industry trend shifts over time
-- Identify emerging markets for product launches
-
-### Competitive Intelligence
-
-- Monitor competitor brand search trends
-- Compare multiple products or technologies
-- Track market share shifts via search interest
-
-### Academic & Data Journalism
-
-- Study public interest in events, policies, or phenomena
-- Build datasets for research papers
-- Visualize trend data for articles and reports
-
-## 📥 Input
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| `keywords` | `string[]` | *required* | Keywords to scrape (max 5) |
-| `timeRange` | `string` | `"today 12-m"` | Time range for data |
-| `geo` | `string` | `""` (worldwide) | Country code (US, FR, GB, etc.) |
-| `category` | `integer` | `0` | Google Trends category ID |
-
-### Time Range Options
-
-| Value | Description |
-| --- | --- |
-| `now 1-H` | Past hour |
-| `now 4-H` | Past 4 hours |
-| `now 1-d` | Past day |
-| `now 7-d` | Past 7 days |
-| `today 1-m` | Past month |
-| `today 3-m` | Past 3 months |
-| `today 12-m` | Past 12 months |
-| `today 5-y` | Past 5 years |
-| `all` | All time (2004–present) |
-
-### Example Input
-
-```
-{
-    "keywords": ["artificial intelligence", "machine learning", "deep learning"],
-    "timeRange": "today 12-m",
-    "geo": "US",
-    "category": 0
-}
-```
-
-## 📤 Output
-
-Each keyword produces one dataset item:
-
-```
-{
-    "keyword": "artificial intelligence",
-    "timeRange": "today 12-m",
-    "geo": "US",
-    "scrapedAt": "2026-03-28T21:00:00.000Z",
-    "interestOverTime": [
-        { "date": "Mar 31 – Apr 6, 2025", "value": 71 },
-        { "date": "Apr 7 – Apr 13, 2025", "value": 68 },
-        { "date": "Apr 14 – Apr 20, 2025", "value": 75 },
-        "..."
-    ],
-    "relatedQueries": {
-        "top": [
-            { "query": "ai artificial intelligence", "value": "100" },
-            { "query": "chatgpt", "value": "85" },
-            { "query": "openai", "value": "62" }
-        ],
-        "rising": [
-            { "query": "claude ai", "value": "+4,500%" },
-            { "query": "gemini ai", "value": "+2,800%" }
-        ]
-    },
-    "relatedTopics": {
-        "top": [
-            { "topic": "Artificial intelligence", "value": "100", "type": "Technology" },
-            { "topic": "ChatGPT", "value": "78", "type": "Software" }
-        ],
-        "rising": [
-            { "topic": "Claude", "value": "+3,200%", "type": "Software" }
-        ]
-    },
-    "interestByRegion": [
-        { "geoName": "District of Columbia", "value": 100 },
-        { "geoName": "Washington", "value": 89 },
-        { "geoName": "California", "value": 85 },
-        { "geoName": "Massachusetts", "value": 82 }
-    ]
-}
-```
-
-## ⚙️ How It Works
-
-1. Fetches widget tokens from Google Trends explore API
-2. Uses tokens to request each data type (time series, geo, related searches)
-3. Parses and normalizes the response data
-4. Random delays (1–3s) between requests to respect rate limits
-5. Exponential backoff on rate limiting (HTTP 429)
-
-## 🔧 Technical Details
-
-- **HTTP/2** for faster, more efficient connections
-- **Session cookies** for proper authentication
-- **Exponential backoff** with jitter on rate limits
-- **Graceful error handling** — partial results are still saved
-
-## 💡 Tips
-
-- **Max 5 keywords per run** — this is a Google Trends limitation for comparison data
-- **Use country codes** (ISO 3166-1 alpha-2) for regional filtering
-- **Longer time ranges** return weekly/monthly aggregates; shorter ranges give hourly/daily data
-- **Category filtering** narrows results — find category IDs on Google Trends
-- **Schedule runs** to track trends over time and build historical datasets
-
-## 📊 Integrations
-
-Export your data to:
-
-- Google Sheets / Excel for visualization
-- BigQuery / Snowflake for analytics pipelines
-- Slack / Email via Apify webhooks for alerts on trending topics
-- Custom dashboards via the Apify API
-
-## 🏷️ Tags
-
-`google-trends` `seo` `keyword-research` `market-research` `trending` `search-trends` `content-strategy` `competitive-intelligence`
-
-## 🔗 Quick Integration
-
-### Python
-
-```
-from apify_client import ApifyClient
-client = ApifyClient("YOUR_API_TOKEN")
-run = client.actor("joyouscam35875/google-trends-scraper").call(run_input={...})
-for item in client.dataset(run["defaultDatasetId"]).iterate_items():
-    print(item)
-```
-
-### Node.js
-
-```
-import { ApifyClient } from 'apify-client';
-const client = new ApifyClient({ token: 'YOUR_API_TOKEN' });
-const run = await client.actor('joyouscam35875/google-trends-scraper').call({...});
-const { items } = await client.dataset(run.defaultDatasetId).listItems();
-```
-
-### No-code: Make / Zapier / n8n
-
-Search for this actor in the Apify connector. No code needed.
+- **In the Apify UI:** Just click **Run**.
 
 ---
 
-## 🔗 More Scrapers by Ken Digital
+### 🔍 What you can fetch
 
-| Scraper | What it does | Price |
+- **Trending now (realtime):** ⏰ Find out what's rapidly rising in searches in the last few hours.
+- **Interest over time:** 📊 Get a timeline of search interest for one or more keywords.
+- **Interest by region:** 🗺️ Discover where your keywords are searched the most.
+- **Related queries/topics:** 💡 Explore new queries and topics related to your main keyword.
+
+---
+
+### 💰 Pricing (rental)
+
+- $12/month
+- Recommended for ongoing tracking and monitoring workflows.
+- You can configure inputs freely; heavy configurations (very long timeframes, CITY/DMA resolution, inc_low_vol) may take longer.
+
+### ⚙️ Input (overview)
+
+The actor's UI is dynamically generated from the `.actor/INPUT_SCHEMA.json` file. Here are the key fields you'll interact with:
+
+- **`scrape_type`** (select, default: `trending_now`)
+- **`keywords`** (array, optional for `trending_now`; required for other types)
+- **`gprop`** (select: `web`/`images`/`news`/`shopping`/`youtube`)
+- **`timeframe_type`** (select: `predefined` or `custom`, default: `predefined`)
+- **`predefined_timeframe`** (select, default: `today 12-m`)
+- **`custom_timeframe`** (string, e.g. "2023-01-01 2023-06-30")
+- **`geo_selection_type`** (select, default: `Common Countries`)
+- **`common_geo`** (string country code, default: `US`)
+- **`custom_geo_code`** (string for regions like `US-CA`)
+- **`geo_resolution`** (`COUNTRY`/`REGION`/`DMA`/`CITY`; for `interest_by_region`)
+- **`inc_low_vol`** (boolean; include low-volume regions; **Pro** recommended)
+- **`trending_language`** (string, default: `en`)
+- **`trending_hours`** (integer 1-191, default: `24`)
+
+---
+
+### 📋 Example Inputs
+
+Here are some common use cases to get you started!
+
+1. **Realtime trending (US, 24 hours)**
+
+```
+{
+  "scrape_type": "trending_now",
+  "common_geo": "US",
+  "trending_hours": 24,
+  "trending_language": "en"
+}
+```
+2. **Interest over time for multiple keywords (US)**
+
+```
+{
+  "scrape_type": "interest_over_time",
+  "keywords": ["data science", "machine learning"],
+  "timeframe_type": "predefined",
+  "predefined_timeframe": "today 12-m",
+  "geo_selection_type": "Common Countries",
+  "common_geo": "US"
+}
+```
+3. **Related queries for a single keyword (global)**
+
+```
+{
+  "scrape_type": "related_queries",
+  "keywords": ["python"],
+  "timeframe_type": "predefined",
+  "predefined_timeframe": "today 12-m"
+}
+```
+
+---
+
+### 💾 Output & Output tab UI
+
+The actor writes exactly one item to the dataset per run, with fields:
+
+- scrape_type
+- data (the full results for the chosen type)
+- error (boolean)
+- error_message (string or null)
+- input_summary (geo, timeframe, resolution, gprop, etc.)
+
+Output tab UI
+
+- The default view is All results and shows the full data JSON right away (no need to switch tabs).
+- Extra views:
+
+- Trending now (table): A flattened table when scrape_type is trending_now
+- Summary: A quick summary of inputs and error status
+
+Notes on data structures
+
+- interest_over_time / interest_by_region: data is an array of objects (rows), similar to a table
+- related_queries / related_topics: data is an array containing keyed lists like { "top": [...], "rising": [...] }
+- trending_now: data is a list of trending keyword objects (keyword, geo, volume, topic_names, timestamps)
+
+---
+
+### ⚠️ Reliability & Troubleshooting
+
+Encounter common issues? Check this guide:
+
+| Error Type | Symptom | Solution |
 | --- | --- | --- |
-| [YouTube Channel Scraper](https://apify.com/joyouscam35875/youtube-channel-scraper) | Videos, stats, metadata via official API | $0.001/video |
-| [France Job Scraper](https://apify.com/joyouscam35875/france-job-scraper) | WTTJ + France Travail + Hellowork | $0.005/job |
-| [France Real Estate Scraper](https://apify.com/joyouscam35875/france-real-estate-scraper) | 5 sources + DVF price analysis | $0.008/listing |
-| [Website Content Crawler](https://apify.com/joyouscam35875/website-content-crawler) | HTML to Markdown for AI/RAG | $0.001/page |
-| [Google Trends Scraper](https://apify.com/joyouscam35875/google-trends-scraper) | Keywords, regions, related queries | $0.002/keyword |
-| [GitHub Repo Scraper](https://apify.com/joyouscam35875/github-repo-scraper) | Stars, forks, languages, topics | $0.002/repo |
-| [RSS News Aggregator](https://apify.com/joyouscam35875/rss-news-aggregator) | Multi-source feed parsing | $0.0005/article |
-| [Instagram Profile Scraper](https://apify.com/joyouscam35875/instagram-profile-scraper) | Followers, bio, posts | $0.0015/profile |
-| [Google Maps Scraper](https://apify.com/joyouscam35875/google-maps-scraper) | Businesses, reviews, contacts | $0.002/result |
-| [TikTok Scraper](https://apify.com/joyouscam35875/tiktok-scraper) | Videos, likes, shares | $0.001/video |
-| [Google SERP Scraper](https://apify.com/joyouscam35875/google-serp-scraper) | Search results, PAA, snippets | $0.003/search |
-| [Trustpilot Scraper](https://apify.com/joyouscam35875/trustpilot-scraper) | Reviews, ratings, sentiment | $0.001/review |
+| **User Confusion** | "My results don't match my keywords!" | Check **Scrape Type**. If it's set to `Trending now`, it ignores keywords. Switch to `Interest over time`. |
+| **Proxy Error** | `ProxyError`, `Connection refused` | Google blocked the IP. Enable **Apify Proxy** (Residential recommended) or rotate custom proxies. |
+| **Rate Limit** | `429 Too Many Requests` | You are scraping too fast. Slow down, use more proxies, or verify your proxy configuration. |
+| **Timeout** | `TimeoutError`, Actor hangs | The request took too long. Try a shorter **Timeframe**, lower **Geo Resolution**, or faster proxies. |
+| **No Data** | `AttributeError`, Empty results | Keyword might be too niche for the selected region/timeframe. Try broadening the search (e.g., "Past 5 years"). |
+| **Invalid URL** | `ValueError: Invalid Input` | You entered a non-Google Trends URL in keywords. Please enter search terms only. |
 
-👉 [View all scrapers](https://apify.com/joyouscam35875)
+---
+
+### 🧰 Runtime defaults & limits
+
+- Memory: 1024 MB (default)
+- Timeout: 30 minutes (default)
+- CPU: 1 (default)
+- Dataset writes: The actor always writes at least one item per run. If no data is found, it pushes an informative item with input summary.
+
+---
+
+## ❓ FAQ & Common Mistakes
+
+### Why is my result showing general trending topics instead of my keywords?
+
+You likely left the **Scrape Type** set to default (`Trending now`).
+
+- **Trending now:** Shows what is popular in the world right now (ignores your keywords).
+- **Interest over time:** Shows data specific to **your** keywords.
+
+**Fix:** Change the **Scrape Type** dropdown at the top of the input to `Interest over time` or `Related queries`.
+
+### Why am I getting "No data returned"?
+
+1. **Check your Timeframe:** Very short timeframes (e.g., "Past hour") often have no data for niche keywords. Try `Past 12 months`.
+2. **Check your Spelling:** Google Trends is sensitive to spelling.
+3. **Geo Mismatch:** Searching for a local keyword (e.g., a specific German store) while Geo is set to "US" will return zero results.
+
+### 📄 Notes
+
+- **Smart Logic:** The actor now detects if you provide keywords but select the wrong scrape type and will warn you in the logs.
+- **Alias support:** You can use `"trending_searches"` as a supported alias for `"trending_now"`.
+
+---
+
+## Changelog
+
+### Version 0.2 (Major Update)
+
+- **Enhanced UI/UX**: Grouped input fields for better clarity and added "Smart Logic" to warn about mismatched configurations (e.g., providing keywords for "Trending Now").
+- **Smart Logic & Error Handling**:
+
+- Automatically validates URLs in keywords.
+- Fixes `400 Bad Request` issues by auto-switching to `REGION` resolution when a specific country is selected.
+- Implemented specific error messages for Proxy Errors, Timeouts, and Rate Limits.
+- The actor now exits with a proper error code on fatal failures to prevent hanging.
+- **Documentation**: Added comprehensive troubleshooting guide and updated FAQ.
