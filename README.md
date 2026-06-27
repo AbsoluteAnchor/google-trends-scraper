@@ -1,98 +1,210 @@
-[Google Trends Scraper](https://apify.com/nexgendata/google-trends-scraper?fpr=data)
+[Google Trends Scraper](https://apify.com/joyouscam35875/google-trends-scraper?fpr=data)
 
-# Google Trends Scraper by nexgendata
+# 📈 Google Trends Scraper
 
-Extract search interest data from Google Trends for any keyword or set of keywords. This actor uses the Google Trends platform to retrieve interest-over-time data, related queries, rising search terms, and regional interest breakdowns. Compare up to five keywords simultaneously, filter by country, and select time ranges from the past hour to the past five years. Built for SEO professionals, market researchers, content strategists, and anyone who needs quantified search demand data.
+Scrape **Google Trends** data at scale — interest over time, related queries, rising topics, and regional interest. Built for SEO professionals, content strategists, and market researchers.
 
-Google Trends is the only public source for relative search volume data across Google's search engine, which processes over 8.5 billion searches daily. The interest scores Google provides (scaled 0-100) reveal how search demand for any topic changes over time and varies by geography. This data drives decisions about content timing, market entry, product naming, ad spend allocation, and competitive positioning. This actor packages that data into structured JSON so you can analyze trends programmatically instead of manually reading charts on the Google Trends website.
+## 💰 3x Cheaper Than Competitors
 
-## How It Works
+| Actor | Price per keyword |
+| --- | --- |
+| Other Google Trends scrapers | $0.005–$0.010 |
+| **This actor** | **$0.002** |
 
-Provide up to five keywords and the actor queries Google Trends for comparative interest data. The results include three data types. Interest over time gives you a time series showing how search interest for each keyword has changed across your selected time range, with each data point containing the date, keyword, and interest score (0-100 where 100 is peak popularity). Related queries show what other searches people perform alongside your keywords, split into top queries (consistently popular) and rising queries (experiencing rapid growth). Regional interest breaks down search popularity by state, country, or metro area depending on your geographic scope.
+Pay-per-event pricing — you only pay for what you scrape.
 
-Time range options span from the past hour (for real-time trend monitoring) to the past five years (for long-term market analysis). Country filtering lets you focus on a specific market or compare global patterns. When you provide multiple keywords, Google Trends normalizes the data so you can directly compare relative search interest between terms — essential for keyword prioritization and competitive analysis.
+## 🎯 What You Get
 
-## Who Uses This
+For each keyword, the actor returns:
 
-SEO professionals use Google Trends data to prioritize keywords by actual search demand, identify seasonal patterns in search behavior, and discover emerging search terms before they become competitive. A content team deciding between two article topics can compare their Google Trends data to choose the one with growing search interest rather than declining demand.
+- **Interest Over Time** — Daily/weekly/monthly search interest (0–100 scale)
+- **Related Queries** — Top and rising related search terms
+- **Related Topics** — Top and rising related topics with categories
+- **Interest by Region** — Geographic breakdown by country or sub-region
 
-Market researchers track Google Trends data to measure brand awareness relative to competitors, identify emerging consumer interests, and validate market size assumptions. When Google searches for "electric bikes" triple in a specific region, that signals a concrete demand shift that retail, manufacturing, and logistics businesses need to know about. Product teams use trend data to time launches, name features, and identify geographic markets where demand is strongest.
+## 🚀 Use Cases
 
-Media buyers and advertising teams align campaign timing with search interest patterns. Running ads for "tax software" in January when search interest begins climbing gets better results than flat spending across the year. Content publishers schedule articles to coincide with rising search trends rather than publishing into declining interest.
+### SEO & Content Strategy
 
-## Pricing
+- Find trending keywords before your competitors
+- Identify seasonal search patterns for content planning
+- Discover related queries to expand your keyword clusters
 
-This actor costs $5 per 1,000 data points. A single keyword analysis over 12 months (52 weekly data points plus related queries and regional data) typically generates 100-200 data points, costing about $0.50-1.00. A comprehensive competitive analysis comparing 5 keywords with all data types runs roughly $2-3. Monthly monitoring of 20 keyword sets costs approximately $15-25/month depending on the breadth of related queries returned.
+### Market Research
 
----
+- Compare brand awareness across regions
+- Track industry trend shifts over time
+- Identify emerging markets for product launches
 
- 
+### Competitive Intelligence
 
-## 💻 Code Example — Python
+- Monitor competitor brand search trends
+- Compare multiple products or technologies
+- Track market share shifts via search interest
+
+### Academic & Data Journalism
+
+- Study public interest in events, policies, or phenomena
+- Build datasets for research papers
+- Visualize trend data for articles and reports
+
+## 📥 Input
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `keywords` | `string[]` | *required* | Keywords to scrape (max 5) |
+| `timeRange` | `string` | `"today 12-m"` | Time range for data |
+| `geo` | `string` | `""` (worldwide) | Country code (US, FR, GB, etc.) |
+| `category` | `integer` | `0` | Google Trends category ID |
+
+### Time Range Options
+
+| Value | Description |
+| --- | --- |
+| `now 1-H` | Past hour |
+| `now 4-H` | Past 4 hours |
+| `now 1-d` | Past day |
+| `now 7-d` | Past 7 days |
+| `today 1-m` | Past month |
+| `today 3-m` | Past 3 months |
+| `today 12-m` | Past 12 months |
+| `today 5-y` | Past 5 years |
+| `all` | All time (2004–present) |
+
+### Example Input
+
+```
+{
+    "keywords": ["artificial intelligence", "machine learning", "deep learning"],
+    "timeRange": "today 12-m",
+    "geo": "US",
+    "category": 0
+}
+```
+
+## 📤 Output
+
+Each keyword produces one dataset item:
+
+```
+{
+    "keyword": "artificial intelligence",
+    "timeRange": "today 12-m",
+    "geo": "US",
+    "scrapedAt": "2026-03-28T21:00:00.000Z",
+    "interestOverTime": [
+        { "date": "Mar 31 – Apr 6, 2025", "value": 71 },
+        { "date": "Apr 7 – Apr 13, 2025", "value": 68 },
+        { "date": "Apr 14 – Apr 20, 2025", "value": 75 },
+        "..."
+    ],
+    "relatedQueries": {
+        "top": [
+            { "query": "ai artificial intelligence", "value": "100" },
+            { "query": "chatgpt", "value": "85" },
+            { "query": "openai", "value": "62" }
+        ],
+        "rising": [
+            { "query": "claude ai", "value": "+4,500%" },
+            { "query": "gemini ai", "value": "+2,800%" }
+        ]
+    },
+    "relatedTopics": {
+        "top": [
+            { "topic": "Artificial intelligence", "value": "100", "type": "Technology" },
+            { "topic": "ChatGPT", "value": "78", "type": "Software" }
+        ],
+        "rising": [
+            { "topic": "Claude", "value": "+3,200%", "type": "Software" }
+        ]
+    },
+    "interestByRegion": [
+        { "geoName": "District of Columbia", "value": 100 },
+        { "geoName": "Washington", "value": 89 },
+        { "geoName": "California", "value": 85 },
+        { "geoName": "Massachusetts", "value": 82 }
+    ]
+}
+```
+
+## ⚙️ How It Works
+
+1. Fetches widget tokens from Google Trends explore API
+2. Uses tokens to request each data type (time series, geo, related searches)
+3. Parses and normalizes the response data
+4. Random delays (1–3s) between requests to respect rate limits
+5. Exponential backoff on rate limiting (HTTP 429)
+
+## 🔧 Technical Details
+
+- **HTTP/2** for faster, more efficient connections
+- **Session cookies** for proper authentication
+- **Exponential backoff** with jitter on rate limits
+- **Graceful error handling** — partial results are still saved
+
+## 💡 Tips
+
+- **Max 5 keywords per run** — this is a Google Trends limitation for comparison data
+- **Use country codes** (ISO 3166-1 alpha-2) for regional filtering
+- **Longer time ranges** return weekly/monthly aggregates; shorter ranges give hourly/daily data
+- **Category filtering** narrows results — find category IDs on Google Trends
+- **Schedule runs** to track trends over time and build historical datasets
+
+## 📊 Integrations
+
+Export your data to:
+
+- Google Sheets / Excel for visualization
+- BigQuery / Snowflake for analytics pipelines
+- Slack / Email via Apify webhooks for alerts on trending topics
+- Custom dashboards via the Apify API
+
+## 🏷️ Tags
+
+`google-trends` `seo` `keyword-research` `market-research` `trending` `search-trends` `content-strategy` `competitive-intelligence`
+
+## 🔗 Quick Integration
+
+### Python
 
 ```
 from apify_client import ApifyClient
-
-client = ApifyClient("YOUR_APIFY_TOKEN")
-run = client.actor("nexgendata/google-trends-scraper").call(run_input={
-    # Fill in the input shape from the actor's input_schema
-})
-
+client = ApifyClient("YOUR_API_TOKEN")
+run = client.actor("joyouscam35875/google-trends-scraper").call(run_input={...})
 for item in client.dataset(run["defaultDatasetId"]).iterate_items():
     print(item)
 ```
 
-## 🌐 Code Example — cURL
+### Node.js
 
 ```
-curl -X POST "https://api.apify.com/v2/acts/nexgendata~google-trends-scraper/run-sync-get-dataset-items?token=YOUR_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{ /* input schema */ }'
+import { ApifyClient } from 'apify-client';
+const client = new ApifyClient({ token: 'YOUR_API_TOKEN' });
+const run = await client.actor('joyouscam35875/google-trends-scraper').call({...});
+const { items } = await client.dataset(run.defaultDatasetId).listItems();
 ```
 
-## ❓ FAQ
+### No-code: Make / Zapier / n8n
 
-**Q: How do I get started?**
-Sign up at [apify.com](https://www.apify.com/?fpr=2ayu9b), grab your API token from Settings → Integrations, and run the actor via the Apify console, API, Python SDK, or any integration (Zapier, Make.com, n8n).
-
-**Q: What's the typical cost per run?**
-See the pricing section below. Most runs finish under $0.10 for typical batches.
-
-**Q: Is this actor maintained?**
-Yes. NexGenData maintains 165+ Apify actors and ships updates regularly. Bug reports via the Apify console issues tab get responses within 24 hours.
-
-**Q: Can I use the output commercially?**
-Yes — you own the output data. Check the target site's Terms of Service for any usage restrictions on the scraped content itself.
-
-**Q: How do I handle rate limits?**
-Apify manages concurrency and retries automatically. For very large batches (10K+ items), run multiple smaller jobs in parallel instead of one mega-job for better reliability.
-
-## 💰 Pricing
-
-Pay-per-event pricing — you only pay for what you actually extract.
-
-- **Actor Start:** $0.0001
-- **result:** $0.0050
-
-## 🔗 Related NexGenData Actors
-
-- [Facebook Ads Library Scraper](https://apify.com/nexgendata/facebook-ads-library-scraper?fpr=2ayu9b)
-- [SaaS Pricing Tracker](https://apify.com/nexgendata/saas-pricing-tracker?fpr=2ayu9b)
-
-## 🚀 Apify Affiliate Program
-
-New to Apify? Sign up with our [referral link](https://www.apify.com/?fpr=2ayu9b) — you get free platform credits on signup, and you help fund the maintenance of this actor fleet.
-
-## 📚 More From NexGenData
-
-Explore the full catalog, tutorials, Gumroad data packs, and newsletter at **[thenextgennexus.com](https://thenextgennexus.com)** — the brand home for everything we ship.
-
-- 📖 Tutorials & how-to guides
-- 🗂️ Full actor catalog with usage examples
-- 📦 Gumroad data packs (one-time purchases)
-- 📬 Newsletter — monthly drops of new actors and revenue experiments
+Search for this actor in the Apify connector. No code needed.
 
 ---
 
-*Built and maintained by [NexGenData](https://apify.com/nexgendata?fpr=2ayu9b) — 165+ actors covering scraping, enrichment, MCP servers, and automation.*
-🏠 Home: [thenextgennexus.com](https://thenextgennexus.com)
+## 🔗 More Scrapers by Ken Digital
+
+| Scraper | What it does | Price |
+| --- | --- | --- |
+| [YouTube Channel Scraper](https://apify.com/joyouscam35875/youtube-channel-scraper) | Videos, stats, metadata via official API | $0.001/video |
+| [France Job Scraper](https://apify.com/joyouscam35875/france-job-scraper) | WTTJ + France Travail + Hellowork | $0.005/job |
+| [France Real Estate Scraper](https://apify.com/joyouscam35875/france-real-estate-scraper) | 5 sources + DVF price analysis | $0.008/listing |
+| [Website Content Crawler](https://apify.com/joyouscam35875/website-content-crawler) | HTML to Markdown for AI/RAG | $0.001/page |
+| [Google Trends Scraper](https://apify.com/joyouscam35875/google-trends-scraper) | Keywords, regions, related queries | $0.002/keyword |
+| [GitHub Repo Scraper](https://apify.com/joyouscam35875/github-repo-scraper) | Stars, forks, languages, topics | $0.002/repo |
+| [RSS News Aggregator](https://apify.com/joyouscam35875/rss-news-aggregator) | Multi-source feed parsing | $0.0005/article |
+| [Instagram Profile Scraper](https://apify.com/joyouscam35875/instagram-profile-scraper) | Followers, bio, posts | $0.0015/profile |
+| [Google Maps Scraper](https://apify.com/joyouscam35875/google-maps-scraper) | Businesses, reviews, contacts | $0.002/result |
+| [TikTok Scraper](https://apify.com/joyouscam35875/tiktok-scraper) | Videos, likes, shares | $0.001/video |
+| [Google SERP Scraper](https://apify.com/joyouscam35875/google-serp-scraper) | Search results, PAA, snippets | $0.003/search |
+| [Trustpilot Scraper](https://apify.com/joyouscam35875/trustpilot-scraper) | Reviews, ratings, sentiment | $0.001/review |
+
+👉 [View all scrapers](https://apify.com/joyouscam35875)
